@@ -406,6 +406,7 @@ public:
         if (maxSymbolsRead == 0){
             maxSymbolsRead = fileString.size() - 1;
             addedLineNumber = addedLineNumber - 1;
+            needExtraLine = true;
             computedTokenType = UNDEFINED;
         }
 
