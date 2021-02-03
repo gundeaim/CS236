@@ -18,6 +18,7 @@ public:
     unsigned int maxSymbolsRead = 0;
     char currentChar;
     bool readNext;
+    bool needExtraLine = false;
     string tempTokenValue;
     int totalTokens = 0;
 
@@ -410,11 +411,16 @@ public:
 
         if (maxSymbolsRead == 100000000){
             maxSymbolsRead = fileString.size() - 1;
+            needExtraLine = true;
             computedTokenType = UNDEFINED;
         }
 
         for (unsigned int i = 0; i < maxSymbolsRead; ++i){
             tempTokenValue = tempTokenValue + fileString[i];
+        }
+
+        if (needExtraLine == true){
+            tempTokenValue = tempTokenValue + '\n';
         }
 
         if (!(computedTokenType == DONOTRUN)) {
