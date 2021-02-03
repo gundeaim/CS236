@@ -26,6 +26,7 @@ string tokenTypeToString(TokenType tokenType){
         case STRING: return "STRING"; break;
         case COMMENT: return "COMMENT"; break;
         case UNDEFINED: return "UNDEFINED"; break;
+        case DONOTRUN: return ""; break;
         case ENDOF: return "EOF";
     }
     return "ERROR";

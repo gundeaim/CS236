@@ -14,8 +14,8 @@ public:
     TokenType computedTokenType = DONOTRUN;
     int lineNumber = 1;
     int addedLineNumber = 0;
-    int symbolsRead = 0;
-    int maxSymbolsRead = 0;
+    unsigned int symbolsRead = 0;
+    unsigned int maxSymbolsRead = 0;
     char currentChar;
     bool readNext;
     string tempTokenValue;
@@ -148,7 +148,7 @@ public:
             currentChar = fileString[symbolsRead];
             while ((isalpha(currentChar)) || isdigit(currentChar)) {
                 symbolsRead = symbolsRead + 1;
-                if (symbolsRead <= fileString.size()) {
+                if (symbolsRead <=  fileString.size()) {
                     currentChar = fileString[symbolsRead];
                 }
                 else{
@@ -383,7 +383,7 @@ public:
                     else{
                         readNext = true;
                         if ((symbolsRead >= maxSymbolsRead)){
-                            maxSymbolsRead = -1;
+                            maxSymbolsRead = 100000000;
                         }
                     }
                 }
@@ -408,12 +408,12 @@ public:
             computedTokenType = UNDEFINED;
         }
 
-        if (maxSymbolsRead == -1){
+        if (maxSymbolsRead == 100000000){
             maxSymbolsRead = fileString.size() - 1;
             computedTokenType = UNDEFINED;
         }
 
-        for (int i = 0; i < maxSymbolsRead; ++i){
+        for (unsigned int i = 0; i < maxSymbolsRead; ++i){
             tempTokenValue = tempTokenValue + fileString[i];
         }
 
