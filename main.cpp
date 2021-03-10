@@ -2,8 +2,10 @@
 #include <fstream>
 #include <string>
 #include <sstream>
-#include <cctype>
+#include <stdexcept>
 #include "Lexer.h"
+#include "Parser.h"
+
 
 using namespace std;
 
@@ -26,6 +28,16 @@ int main(int argc, char* argv[]) {
     Lexer object1;
     object1.setString(fileContents);
     object1.findAllTokens();
+
+    Parser parserObject;
+    parserObject.setTokenVector(object1.getTokenVector());
+    try {
+        parserObject.datalogProgram();
+    }
+    catch (string message){
+        cout << message;
+    }
+
 
     //Lexer testObject;
     //testObject.setString(testString);

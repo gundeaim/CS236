@@ -2,9 +2,10 @@
 #define UNTITLED1_LEXER_H
 #include <string>
 #include <iostream>
+#include <vector>
 #include "Token.h"
+#include "Parser.h"
 using namespace std;
-
 
 class Lexer {
 public:
@@ -21,10 +22,16 @@ public:
     bool needExtraLine = false;
     string tempTokenValue;
     int totalTokens = 0;
-
+    vector<Token*> tokenVector;
 
     void setString(string& passedString){
         fileString = passedString;
+    }
+
+    void addTokenToVector(){
+        Token *tokenPointer = new Token;
+        tokenPointer->setTokenType(computedTokenType, tempTokenValue, lineNumber);
+        tokenVector.push_back(tokenPointer);
     }
 
     void findAllTokens () {
@@ -345,7 +352,7 @@ public:
             }
             if (symbolsRead >= maxSymbolsRead) {
                 maxSymbolsRead = symbolsRead;
-                computedTokenType = COMMENT;
+                computedTokenType = DONOTRUN;
             }
             symbolsRead = 0;
             currentChar = fileString[symbolsRead];
@@ -375,9 +382,9 @@ public:
                             if (currentChar == '#'){
                                 readNext = false;
                                 symbolsRead = symbolsRead + 1;
-                                if ((computedTokenType == COMMENT) || (symbolsRead >= maxSymbolsRead)) {
+                                if ((computedTokenType == DONOTRUN) || (symbolsRead >= maxSymbolsRead)) {
                                     maxSymbolsRead = symbolsRead;
-                                    computedTokenType = COMMENT;
+                                    computedTokenType = DONOTRUN;
                                 }
                             }
                     }
@@ -426,7 +433,8 @@ public:
 
         if (!(computedTokenType == DONOTRUN)) {
             firstToken.setTokenType(computedTokenType, tempTokenValue, lineNumber);
-            firstToken.toString();
+            addTokenToVector();
+            //firstToken.toString();
             totalTokens = totalTokens + 1;
         }
             fileString.erase(0, maxSymbolsRead);
@@ -434,15 +442,15 @@ public:
 
         computedTokenType = ENDOF;
         firstToken.setTokenType(computedTokenType, tempTokenValue, lineNumber);
-        firstToken.toString();
+        addTokenToVector();
+        //firstToken.toString();
         totalTokens = totalTokens + 1;
-        cout << "Total Tokens = " << totalTokens;
+        //cout << "Total Tokens = " << totalTokens;
+
     }
 
-
-    string getToken(){
-        firstToken.setTokenType(computedTokenType, tempTokenValue, lineNumber);
-        return firstToken.toString();
+    vector<Token*> getTokenVector(){
+        return tokenVector;
     }
 };
 

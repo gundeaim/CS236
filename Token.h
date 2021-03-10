@@ -3,6 +3,7 @@
 #include <string>
 #include <iostream>
 #include <ostream>
+
 using namespace std;
 
 enum TokenType {DONOTRUN, COMMA, PERIOD, Q_MARK, LEFT_PAREN, RIGHT_PAREN, COLON, COLON_DASH, MULTIPLY, ADD, SCHEMES, FACTS, RULES, QUERIES, ID, STRING, COMMENT, UNDEFINED, ENDOF};
@@ -123,6 +124,26 @@ public:
             lineNumber = passedLineNumber;
         }
     }
+
+    TokenType getTokenType(){
+        return currentType;
+    }
+
+    string getTokenTypeAsString(){
+        return tokenTypeToString(currentType);
+    }
+
+    string getTokenValue(){
+        return value;
+    }
+
+    int getTokenLine(){
+        return lineNumber;
+    }
+
+
+
+
 
     string toString(){
 
